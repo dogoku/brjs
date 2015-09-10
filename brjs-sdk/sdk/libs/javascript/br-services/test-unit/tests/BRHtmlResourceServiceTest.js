@@ -96,7 +96,7 @@ BRHtmlResourceServiceTest.prototype.test_nestedTemplatesAddedViaTheHtmlTagAreUnw
 var getService = function(sUrl)
 {
 	if (!sUrl) { sUrl = "/test/bundles/html.bundle"; }
-	return new BRHtmlResourceService(sUrl);
+	return new BRHtmlResourceService(sUrl, true);
 };
 
 var assertTemplateContentsMatch = function(templateId, expected) {
