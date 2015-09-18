@@ -662,5 +662,123 @@ GwtTestRunnerTest.prototype.test_xdescribeCanBeUsedToDisableTestSuitesWithoutBre
 	oTestRunner.endTest();
 };
 
-// TODO: create unit tests that try to use something other than fixture
-// TODO: create unit tests that use prop2 instead of prop
+    // TODO: create unit tests that try to use something other than fixture
+    // TODO: create unit tests that use prop2 instead of prop
+    GwtTestRunnerTest.prototype.test_xdescribeCanBeUsedToDisableTestSuitesWithoutBreakingChaining = function()
+    {
+        var oTestRunner = new GwtTestRunner("br/test/TestFixtureFactory");
+        oTestRunner.startTest();
+        this.stubMockFixture(oTestRunner, "fixture");
+        
+        xdescribe("test-suite #1", function() {
+            it('test #1', function()
+            {
+                oTestRunner.doGiven("fixture.prop = 'value1'");
+            });
+        });
+        
+        describe("test-suite #2", function() {
+            it('test #2', function()
+            {
+                oTestRunner.doGiven("test.continuesFrom = 'test-suite #1::test #1'");
+                oTestRunner.doGiven("fixture.prop = 'value2'");
+            });
+        });
+        
+        this.getFixture(oTestRunner, "fixture").expects(once()).doGiven("prop", "value1");
+        this.getFixture(oTestRunner, "fixture").expects(once()).doGiven("prop", "value2");
+        this.getFixture(oTestRunner, "fixture").expects(once()).doGiven("prop", "value3");
+        
+        oTestRunner.doGiven("test.continuesFrom = 'test #2'");
+        oTestRunner.doGiven("fixture.prop = 'value3'");
+        oTestRunner.doThen("fixture.prop = 'value3'");
+        oTestRunner.endTest();
+    };
+    
+    GwtTestRunnerTest.prototype.test_DottedNotationForGlobalsIsAllowed = function()
+    {
+        window.br = window.br || {};
+        window.br.test = window.br.test || {};
+        window.br.test.TestFixtureFactory = window.br.test.TestFixtureFactory || require("br/test/TestFixtureFactory");
+        
+        var oTestRunner = new GwtTestRunner("br.test.TestFixtureFactory");
+        oTestRunner.startTest();
+        this.stubMockFixture(oTestRunner, "fixture");
+        
+        oTestRunner.doGiven("fixture.prop = 'value'");
+        oTestRunner.doWhen("fixture.prop => 'value'");
+        oTestRunner.doThen("fixture.prop = 'value'");
+        oTestRunner.endTest();
+    };
+	
+	GwtTestRunnerTest.prototype.test_continuesFromsCanBeChainedMultipleTimes = function()
+	{
+		var oTestRunner = new GwtTestRunner("br/test/TestFixtureFactory");
+		oTestRunner.startTest();
+		this.stubMockFixture(oTestRunner, "fixture");
+		
+		describe("test-suite #1", function() {
+			it('test #1', function() {
+			oTestRunner.doGiven("fixture.prop = 'value1'");
+			});
+			
+			it('test #2', function() {
+			oTestRunner.doGiven("test.continuesFrom = 'test #1'");
+			oTestRunner.doGiven("fixture.prop = 'value2'");
+			});
+			
+			it('test #3', function() {
+			oTestRunner.doGiven("test.continuesFrom = 'test #2'");
+			oTestRunner.doGiven("fixture.prop = 'value2'");
+			});
+			
+			it('test #4', function() {
+			oTestRunner.doGiven("test.continuesFrom = 'test #3'");
+			oTestRunner.doGiven("fixture.prop = 'value2'");
+			});
+			
+			
+			it('test #5', function() {
+			oTestRunner.doGiven("test.continuesFrom = 'test #4'");
+			oTestRunner.doGiven("fixture.prop = 'value2'");
+			});
+			
+			
+			it('test #6', function() {
+			oTestRunner.doGiven("test.continuesFrom = 'test #5'");
+			oTestRunner.doGiven("fixture.prop = 'value2'");
+			});
+			
+			it('test #7', function() {
+			oTestRunner.doGiven("test.continuesFrom = 'test #6'");
+			oTestRunner.doGiven("fixture.prop = 'value2'");
+			}); 
+			
+			it('test #8', function() {
+			oTestRunner.doGiven("test.continuesFrom = 'test #7'");
+			oTestRunner.doGiven("fixture.prop = 'value2'");
+			}); 
+			
+			it('test #9', function() {
+			oTestRunner.doGiven("test.continuesFrom = 'test #8'");
+			oTestRunner.doGiven("fixture.prop = 'value2'");
+			});  
+			
+			it('test #10', function() {
+				oTestRunner.doGiven("test.continuesFrom = 'test #9'");
+				oTestRunner.doGiven("fixture.prop = 'value2'");
+			});  
+				
+			it('test #11', function() {
+				oTestRunner.doGiven("test.continuesFrom = 'test #10'");
+				oTestRunner.doGiven("fixture.prop = 'value2'");
+			});  
+		});
+   
+		oTestRunner.doGiven("test.continuesFrom = 'test #11'");
+		oTestRunner.doGiven("fixture.prop = 'value3'");
+		oTestRunner.doThen("fixture.prop = 'value3'");
+		oTestRunner.endTest();
+	};
+		
+})();
