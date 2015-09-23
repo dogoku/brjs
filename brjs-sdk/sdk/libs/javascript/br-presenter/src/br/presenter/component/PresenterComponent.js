@@ -312,7 +312,7 @@ PresenterComponent.prototype.removeLifeCycleListener = function(listener) {
  */
 PresenterComponent.prototype._getTemplate = function() {
 	if (!this.m_eTemplate) {
-		var eTemplateNode = require('service!br.html-service').getTemplateElement(this.m_sTemplateId);
+		var eTemplateNode = br.ServiceRegistry.getService('br.html-service').getTemplateElement(this.m_sTemplateId);
 
 		if (!eTemplateNode) {
 			throw new PresenterComponent.TemplateNotFoundError("Template with ID '" + this.m_sTemplateId + "' couldn't be found");
