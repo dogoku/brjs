@@ -1,11 +1,7 @@
-(function() {
-    var GwtTestRunner = require("br/test/GwtTestRunner");
-    GwtTestRunner.initialize();
+br.test.GwtTestRunner.initialize();
 
-	// test for https://github.com/BladeRunnerJS/brjs/issues/1523 to make sure IE8 doesnt get a stackoverflow if there are multiple 'continuesFrom'
-    describe("multiple continue from using a PresentaionModel with an EditableProperty dont cause a stackoverflow", function() {
-
-        fixtures( require("br/presenter/PresenterFixtureFactory") );
+describe("multiple continue from using a PresentaionModel with an EditableProperty dont cause a stackoverflow",function() {
+    fixtures("PresenterFixtureFactory");
 
         it("new test", function()
         {
@@ -85,5 +81,4 @@
             given("demo.viewOpened = true");
             then("demo.model.plainProperty = 'a'");
         });  
-    });
-})();
+});

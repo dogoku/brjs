@@ -666,7 +666,7 @@ GwtTestRunnerTest.prototype.test_xdescribeCanBeUsedToDisableTestSuitesWithoutBre
     // TODO: create unit tests that use prop2 instead of prop
     GwtTestRunnerTest.prototype.test_xdescribeCanBeUsedToDisableTestSuitesWithoutBreakingChaining = function()
     {
-        var oTestRunner = new GwtTestRunner("br/test/TestFixtureFactory");
+        var oTestRunner = new br.test.GwtTestRunner("br/test/TestFixtureFactory");
         oTestRunner.startTest();
         this.stubMockFixture(oTestRunner, "fixture");
         
@@ -701,7 +701,7 @@ GwtTestRunnerTest.prototype.test_xdescribeCanBeUsedToDisableTestSuitesWithoutBre
         window.br.test = window.br.test || {};
         window.br.test.TestFixtureFactory = window.br.test.TestFixtureFactory || require("br/test/TestFixtureFactory");
         
-        var oTestRunner = new GwtTestRunner("br.test.TestFixtureFactory");
+        var oTestRunner = new br.test.GwtTestRunner("br.test.TestFixtureFactory");
         oTestRunner.startTest();
         this.stubMockFixture(oTestRunner, "fixture");
         
@@ -713,7 +713,7 @@ GwtTestRunnerTest.prototype.test_xdescribeCanBeUsedToDisableTestSuitesWithoutBre
 	
 	GwtTestRunnerTest.prototype.test_continuesFromsCanBeChainedMultipleTimes = function()
 	{
-		var oTestRunner = new GwtTestRunner("br/test/TestFixtureFactory");
+		var oTestRunner = new br.test.GwtTestRunner("br/test/TestFixtureFactory");
 		oTestRunner.startTest();
 		this.stubMockFixture(oTestRunner, "fixture");
 		
@@ -780,5 +780,3 @@ GwtTestRunnerTest.prototype.test_xdescribeCanBeUsedToDisableTestSuitesWithoutBre
 		oTestRunner.doThen("fixture.prop = 'value3'");
 		oTestRunner.endTest();
 	};
-		
-})();

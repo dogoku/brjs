@@ -55,8 +55,8 @@ PresenterComponentTest.BadPresentationModel = function()
     PresenterComponentTest.prototype.test_anExceptionIsThrownIfTheTemplateDoesNotExist = function()
     {
         assertException("1a", function() {
-            new PresenterComponent("template-does-not-exist", new PresenterComponentTest.MockPresentationModel()).getElement();
-        }, PresenterComponent.TEMPLATE_NOT_FOUND);
+            new br.presenter.component.PresenterComponent("template-does-not-exist", new PresenterComponentTest.MockPresentationModel()).getElement();
+        }, br.presenter.component.PresenterComponent.TEMPLATE_NOT_FOUND);
     };
 
 PresenterComponentTest.prototype.test_anExceptionIsThrownIfThePresentationModelIsNotAnInstanceOfPresentationModel = function()
